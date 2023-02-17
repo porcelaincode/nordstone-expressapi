@@ -1,14 +1,14 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
-import http from "http";
+import http, { Server } from "http";
 
 dotenv.config();
 
-const port = process.env.PORT;
+const port: number = 5000;
 const app: Express = express();
 app.use(express.json());
 
-const server = http.createServer(app);
+const server: Server = http.createServer(app);
 
 function performArithmeticOperation(
   numbers: number[],
@@ -44,11 +44,6 @@ app.get("*", (req, res) =>
   res.status(404).json({ message: "Route does not exist" })
 );
 
-server.listen(port, "0.0.0.0");
-server.on("listening", function () {
-  console.log(
-    "Express server started on port %s at %s",
-    server.address().port,
-    server.address().address
-  );
+server.listen(port, "0.0.0.0", 511, () => {
+  return console.log(`Express server started on port ${port}`);
 });
